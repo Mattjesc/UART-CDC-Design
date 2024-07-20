@@ -1,5 +1,7 @@
 # UART Design with CDC, FIFO Buffers, and Dynamic Baud Rate Configuration
 
+![Project Meme](https://github.com/user-attachments/assets/e51d14c0-933a-4e4c-b6de-af9cbd5d8991)
+
 ## Overview
 
 This repository contains implementations of a UART (Universal Asynchronous Receiver/Transmitter) with Clock Domain Crossing (CDC), First In, First Out (FIFO) buffers, and dynamic Baud Rate Configuration (BRC). The project is divided into three versions, each adding new features to the previous one. This progression demonstrates the enhancement of UART functionality, starting from basic CDC, incorporating FIFO buffers, and finally enabling dynamic baud rate adjustment. The project addresses the lack of accessible and available information and implementations of UARTs with these additional features online.
@@ -20,7 +22,9 @@ The project aims to provide a robust and flexible UART solution capable of handl
 
 ### Clock Domain Crossing (CDC)
 
-In UART communication, the transmitter and receiver often operate at different clock frequencies. The CDC design handles this by using separate clock signals for the transmitter (`tx_clk`) and receiver (`rx_clk`). This is crucial in UART implementations to ensure proper synchronization and data integrity when clocks are asynchronous. The use of CDC ensures that data can be reliably transmitted and received even when the clocks of the transmitting and receiving systems are not synchronized.
+![Screenshot 2024-07-20 124054](https://github.com/user-attachments/assets/11dbe76c-7cee-4af2-a5a7-8ced4d4e463a)
+
+In UART communication, while the transmitter and receiver generally use the same baud rate, they might be part of systems operating on different clock domains. For the purposes of this project, let's logically assume that the transmitter and receiver are part of such systems. The CDC design handles this by using separate clock signals for the transmitter (`tx_clk`) and receiver (`rx_clk`). This is crucial in UART implementations to ensure proper synchronization and data integrity when clocks are asynchronous. The use of CDC ensures that data can be reliably transmitted and received even when the clocks of the transmitting and receiving systems are not synchronized within the larger system.
 
 ## Basic Principles and Intuition
 
@@ -65,9 +69,9 @@ In this project, we implement three distinct process methodologies for the state
 - **Application in Project**:
   - This methodology is applied in the UART reception state machine. The first always block handles state transitions (e.g., idle, rwait, recv, rcheck) based on the `rx` input signal. The second always block manages the output logic for the received data (`rxout`) and the reception completion signal (`rxdone`). The third always block handles conditions such as bit sampling and timing (e.g., `bitDone_rx_reg`) to ensure accurate data reception. This modularization allows for clear separation of the reception logic, improving readability and maintainability.
 
-## Version Details
+## Variation Details
 
-### UART_CDC_BASIC (Version 1)
+### UART_CDC_BASIC
 
 #### Overview
 
@@ -82,7 +86,9 @@ This version implements a basic UART with Clock Domain Crossing (CDC). It focuse
 
 The simulation waveform provides insight into the behavior of the basic UART with CDC. Below is an example of the waveform generated during the simulation:
 
-### UART_CDC_FIFO (Version 2)
+![SimulationWaveformExample](https://github.com/user-attachments/assets/a4f53dd0-5dc8-495a-a1fb-8bda0ce928d5)
+
+### UART_CDC_FIFO
 
 #### Overview
 
@@ -96,7 +102,9 @@ This version builds on the basic UART with CDC by incorporating FIFO buffers for
 
 The simulation waveform provides insight into the behavior of the UART with CDC and FIFO buffers. Below is an example of the waveform generated during the simulation:
 
-### UART_CDC_FIFO_BRC (Version 3)
+![SimulationWaveformExample](https://github.com/user-attachments/assets/255b3f72-1988-4f4f-acce-b58761873603)
+
+### UART_CDC_FIFO_BRC
 
 #### Overview
 
@@ -109,6 +117,8 @@ This version builds on the UART with CDC and FIFO by adding dynamic Baud Rate Co
 #### Simulation Waveform
 
 The simulation waveform provides insight into the behavior of the UART with CDC, FIFO buffers, and dynamic baud rate configuration. Below is an example of the waveform generated during the simulation:
+
+![SimulationWaveformExample](https://github.com/user-attachments/assets/73632402-9b2d-45a7-bd39-30ac862ab924)
 
 #### Dynamic Baud Rate Configuration
 
@@ -126,4 +136,4 @@ For more detailed information on the signals and simulation results, please refe
 
 ### Disclaimer
 
-This project has not been tested on a real FPGA board yet and is currently limited to simulations.
+This project has not been tested on a real FPGA board yet due to financial constraints (lol).
