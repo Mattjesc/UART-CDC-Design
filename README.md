@@ -59,6 +59,7 @@ In this project, we implement three distinct process methodologies for the state
 
 **Two Process State Machine (Mealy)**: This methodology separates the state transition logic and the output logic into two distinct always blocks. This separation can make the design clearer by decoupling state transitions from output generation, allowing each to be handled independently.
 
+- **Warning**: While this approach is useful for clarity, it can introduce potential timing issues if not carefully managed. Care should be taken to ensure that the state transitions and outputs are correctly synchronized.
 - **Application in Project**:
   - This approach is used in the FIFO control logic. One always block manages the state transitions (e.g., idle, read, write) based on the FIFO's status (empty, full) and control signals (`wr_en`, `rd_en`). The second always block generates the FIFO's output signals (`dout`, `empty`, `full`). By separating these concerns, the design can clearly define how state transitions trigger changes in FIFO status and outputs.
 
@@ -66,6 +67,7 @@ In this project, we implement three distinct process methodologies for the state
 
 **Three Process State Machine (Mealy)**: This involves three separate always blocks, one for state transitions, one for output logic, and one for handling specific conditions or actions related to the state transitions. This approach can further modularize the design, making it easier to manage complex state behaviors.
 
+- **Warning**: This approach provides clear separation and modularization but requires careful synchronization between the processes to avoid timing issues.
 - **Application in Project**:
   - This methodology is applied in the UART reception state machine. The first always block handles state transitions (e.g., idle, rwait, recv, rcheck) based on the `rx` input signal. The second always block manages the output logic for the received data (`rxout`) and the reception completion signal (`rxdone`). The third always block handles conditions such as bit sampling and timing (e.g., `bitDone_rx_reg`) to ensure accurate data reception. This modularization allows for clear separation of the reception logic, improving readability and maintainability.
 
